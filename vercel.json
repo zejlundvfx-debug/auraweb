@@ -1,0 +1,5 @@
+{
+  "name": "auraemail",
+  "buildCommand": "next build",
+  "installCommand": "npm install"
+}
