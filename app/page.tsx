@@ -5,7 +5,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import {
   Sparkles, ChevronDown, Check, ArrowRight,
   Inbox, PenLine, SpellCheck, Trash2, FileText,
-  Plus, Clock, ShieldCheck, X,
+  Plus, Clock, ShieldCheck, X, Menu,
   Users, Building2, Mail, BrainCircuit, EyeOff,
   Timer, TrendingDown, BadgePercent, Lock
 } from 'lucide-react'
@@ -241,6 +241,7 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null)
   const [bannerDismissed, setBannerDismissed] = useState(false)
   const [waitlistOpen, setWaitlistOpen] = useState(false)
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const heroRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 80])
@@ -279,18 +280,21 @@ export default function Home() {
       {/* Nav */}
       <nav className="sticky top-0 z-50 border-b border-slate-100/80 bg-white/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+          {/* Logo */}
           <div className="flex items-center gap-2.5">
             <Image src="/logo.svg" alt="Aura logo" width={32} height={32} className="rounded-xl" />
             <span className="font-bold text-[17px] tracking-tight text-slate-900">Aura</span>
-            <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 px-1.5 py-0.5 rounded-full ml-0.5">BETA</span>
+            <span className="text-[10px] font-bold text-indigo-600 bg-indigo-50 border border-indigo-100 px-1.5 py-0.5 rounded-full ml-0.5 hidden sm:inline-flex">BETA</span>
           </div>
 
+          {/* Desktop links */}
           <div className="hidden md:flex items-center gap-8">
             <a href="#about" className="text-[14px] text-slate-500 hover:text-slate-900 font-medium transition-colors">{c.nav_about}</a>
             <a href="#features" className="text-[14px] text-slate-500 hover:text-slate-900 font-medium transition-colors">{c.nav_features}</a>
             <a href="#pricing" className="text-[14px] text-slate-500 hover:text-slate-900 font-medium transition-colors">{c.nav_pricing}</a>
           </div>
 
+          {/* Right side — lang + CTA + burger */}
           <div className="flex items-center gap-3">
             <div className="flex items-center bg-slate-100 rounded-full p-0.5">
               <button
@@ -311,17 +315,56 @@ export default function Home() {
               </button>
             </div>
 
+            {/* Desktop CTA */}
             <button
               onClick={() => setWaitlistOpen(true)}
-              className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-bold text-white overflow-hidden group transition-all duration-300 hover:scale-[1.04] hover:shadow-[0_0_20px_rgba(99,102,241,0.5)]"
+              className="hidden sm:inline-flex relative items-center gap-2 px-5 py-2.5 rounded-full text-[13px] font-bold text-white overflow-hidden group transition-all duration-300 hover:scale-[1.04] hover:shadow-[0_0_20px_rgba(99,102,241,0.5)]"
               style={{ background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' }}
             >
               <span className="relative z-10">{c.nav_cta}</span>
               <ArrowRight size={13} className="relative z-10 transition-transform duration-200 group-hover:translate-x-0.5" />
               <span className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-200 rounded-full" />
             </button>
+
+            {/* Burger button */}
+            <button
+              onClick={() => setMobileNavOpen(!mobileNavOpen)}
+              className="md:hidden p-2 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-all duration-200"
+              aria-label="Toggle menu"
+            >
+              <motion.div animate={{ rotate: mobileNavOpen ? 90 : 0 }} transition={{ duration: 0.2 }}>
+                {mobileNavOpen ? <X size={20} /> : <Menu size={20} />}
+              </motion.div>
+            </button>
           </div>
         </div>
+
+        {/* Mobile menu */}
+        <AnimatePresence>
+          {mobileNavOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="md:hidden overflow-hidden border-t border-slate-100/80 bg-white/95 backdrop-blur-xl"
+            >
+              <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-1">
+                <a href="#about" onClick={() => setMobileNavOpen(false)} className="text-[15px] text-slate-600 hover:text-slate-900 font-medium py-2.5 px-3 rounded-xl hover:bg-slate-50 transition-colors">{c.nav_about}</a>
+                <a href="#features" onClick={() => setMobileNavOpen(false)} className="text-[15px] text-slate-600 hover:text-slate-900 font-medium py-2.5 px-3 rounded-xl hover:bg-slate-50 transition-colors">{c.nav_features}</a>
+                <a href="#pricing" onClick={() => setMobileNavOpen(false)} className="text-[15px] text-slate-600 hover:text-slate-900 font-medium py-2.5 px-3 rounded-xl hover:bg-slate-50 transition-colors">{c.nav_pricing}</a>
+                <button
+                  onClick={() => { setWaitlistOpen(true); setMobileNavOpen(false) }}
+                  className="mt-2 w-full flex items-center justify-center gap-2 px-5 py-3 rounded-2xl text-[14px] font-bold text-white"
+                  style={{ background: 'linear-gradient(135deg,#6366f1,#8b5cf6)' }}
+                >
+                  {c.nav_cta}
+                  <ArrowRight size={14} />
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* Hero */}
@@ -345,7 +388,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-[64px] sm:text-[80px] font-bold tracking-tight leading-[1.05] text-slate-900 mb-6"
+            className="text-[40px] xs:text-[52px] sm:text-[64px] md:text-[80px] font-bold tracking-tight leading-[1.05] text-slate-900 mb-6"
           >
             {c.hero_h1a}
             <br />

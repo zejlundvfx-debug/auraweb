@@ -65,7 +65,7 @@ export default function PrivacyPage() {
             <p>Vi deler ikke dine personoplysninger med tredjepart, undtagen:</p>
             <ul className="list-disc list-inside space-y-1.5 mt-2">
               <li>Google LLC og Microsoft Corporation (via OAuth, kun til autentificering)</li>
-              <li>AI-udbyder til tekstgenerering — kun de tekstbidder du aktivt sender til AI-analyse. Ingen hele emails sendes uden din handling.</li>
+              <li>Google Gemini (Vertex AI) til tekstgenerering — kun de tekstbidder du aktivt sender til AI-analyse. Ingen hele emails sendes uden din handling.</li>
             </ul>
           </section>
 
@@ -103,6 +103,48 @@ export default function PrivacyPage() {
             <p>
               Spørgsmål? Skriv til <a href="mailto:zejlund@outlook.com" className="text-violet-400 hover:underline">zejlund@outlook.com</a>.
               Du kan også indgive klage til <a href="https://www.datatilsynet.dk" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:underline">Datatilsynet</a>.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-base font-semibold text-white/80 mb-3">10. Gmail API-adgange (OAuth-scopes)</h2>
+            <p className="mb-3">Aura anmoder om følgende Gmail-tilladelser via OAuth 2.0:</p>
+            <table className="w-full text-sm text-white/60 border-collapse mb-3">
+              <thead>
+                <tr className="border-b border-white/10">
+                  <th className="text-left py-2 pr-4 font-semibold text-white/70">Scope</th>
+                  <th className="text-left py-2 font-semibold text-white/70">Formål</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-white/5">
+                  <td className="py-2 pr-4 font-mono text-violet-400 text-xs">gmail.readonly</td>
+                  <td className="py-2">Læse emails, metadata og labels for AI-sortering og visning</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-2 pr-4 font-mono text-violet-400 text-xs">gmail.send</td>
+                  <td className="py-2">Sende emails på brugerens vegne via "Svar med Aura"</td>
+                </tr>
+                <tr className="border-b border-white/5">
+                  <td className="py-2 pr-4 font-mono text-violet-400 text-xs">gmail.modify</td>
+                  <td className="py-2">Markere emails som læst, arkivere og flytte mellem labels</td>
+                </tr>
+                <tr>
+                  <td className="py-2 pr-4 font-mono text-violet-400 text-xs">gmail.labels</td>
+                  <td className="py-2">Oprette og administrere sorte/hvide lister og filtre</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <section>
+            <h2 className="text-base font-semibold text-white/80 mb-3">11. Overholdelse af Googles API Services-brugerdatapolitik</h2>
+            <p>
+              Auras anvendelse af oplysninger modtaget fra Google APIs overholder{' '}
+              <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer" className="text-violet-400 hover:underline">
+                Googles API Services User Data Policy
+              </a>
+              , herunder kravene i afsnittet Limited Use. Aura anvender kun Gmail-data til de formål, der er beskrevet i denne privatlivspolitik, og overfører ikke data til tredjepart uden for de formål, der er beskrevet her.
             </p>
           </section>
         </div>
